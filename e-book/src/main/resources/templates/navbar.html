@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>BuySell</title>
+</head>
+<body>
+
+<h1>BueSell | <a th:href="@{/login}">Enter</a> </h1>
+<form th:action="@{/logout}" method="post">
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+    <input type="submit" value="Exit">
+</form>
+
+Authenticated user: <div sec:authentication="name"></div>
+<h4>World sell</h4>
+<div th:each="product: ${products}" th:method="GET">
+    <div>
+        <p th:text="${product.getTitle()}">BuySell</p>
+        <p th:text="${product.getPrice()}">Price</p>
+    </div>
+</div>
+<hr/>
+
+
+<form th:action="@{/product}" th:object="${title}" method="get">
+    <div class="row m-b">
+        <div class="col-sm-6">
+            Search by Name: <input id="filter" type="text" th:field="*{title}" />
+            <button ><i class="material-icons md-24">&#xe8b6;</i></button>
+        </div>
+    </div>
+</form>
+
+
+<h3>New Product</h3>
+<form method="post" th:action="@{product/create}" th:object="${prod}" enctype="multipart/form-data">
+
+    Title <label for="name"></label><input type="text" th:field="*{title}" id="name"/><br/>
+    Description of product: <label>
+    <input type="text" th:field="*{description}"/>
+</label>
+    Price of product: <label>
+    <input type="number" th:field="*{price}"/>
+</label><br/>
+    City of product: <label>
+    <input type="text" th:field="*{city}"/>
+</label><br/>
+    Author of product: <label>
+    <input th:field="*{author}" type="text"/>
+</label><br/>
+
+    <tr><td>File to upload:</td><td><input type="file" th:name="file1" /></td></tr>
+    <tr><td>File to upload:</td><td><input type="file" th:name="file2" /></td></tr>
+    <tr><td>File to upload:</td><td><input type="file" th:name="file3" /></td></tr>
+
+
+    <input type="submit" value="Product"/>
+</form>
+</body>
+</html>
+
+
+
